@@ -2,7 +2,7 @@ class Vocabulary:
     
     def __init__(self, vocabulary, wordFrequencyFilePath):
         self.vocabulary = vocabulary
-        self.WORD_FREQUENCY_FILE_FULL_PATH = wordFrequencyFilePath
+        self.BAG_OF_WORDS_FILE_FULL_PATH = wordFrequencyFilePath
         self.input_word_index = {}
         self.reverse_input_word_index = {}
         
@@ -11,7 +11,7 @@ class Vocabulary:
         self.MaxSentenceLength = None
         
     def PrepareVocabulary(self,reviews):
-        self._prepare_Word_Frequency_Count_File(reviews)
+        self._prepare_Bag_of_Words_File(reviews)
         self._create_Vocab_Indexes()
         
         self.MaxSentenceLength = max([len(txt.split(" ")) for txt in reviews])
@@ -20,17 +20,17 @@ class Vocabulary:
         if number_words == None:
             number_words = self.vocabulary
         
-        chars = json.loads(open(self.WORD_FREQUENCY_FILE_FULL_PATH).read())
+        chars = json.loads(open(self.BAG_OF_WORDS_FILE_FULL_PATH).read())
         counter = Counter(chars)
         most_popular_words = {key for key, _value in counter.most_common(number_words)}
         return most_popular_words
     
-    def _prepare_Word_Frequency_Count_File(self,reviews):
+    def _prepare_Bag_of_Words_File(self,reviews):
         counter = Counter()    
         for s in reviews:
             counter.update(s.split(" "))
             
-        with open(self.WORD_FREQUENCY_FILE_FULL_PATH, 'w') as output_file:
+        with open(self.BAG_OF_WORDS_FILE_FULL_PATH, 'w') as output_file:
             output_file.write(json.dumps(counter))
                  
     def _create_Vocab_Indexes(self):
