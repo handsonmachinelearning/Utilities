@@ -88,3 +88,24 @@ class Vocabulary:
             vectors.append(vector)
             
         return vectors
+    
+    
+    def Get_SkipGram_Target_Words(self, sentences, WINDOW_SIZE = 5):
+        SKIP_GRAM_INPUT_WORD_LIST = []
+
+        for sentence in sentences:
+            sentence_tokenized = sentence.split(" ")
+
+            for index, target_word in enumerate(sentence_tokenized):
+                FROM_INDEX = max(index-WINDOW_SIZE,0)
+                TO_INDEX = min(index+1+WINDOW_SIZE,len(sentence_tokenized))
+
+                #TO REVIEW
+                #print(index, word, FROM_INDEX,TO_INDEX)
+                #print(sentence_tokenized[FROM_INDEX : TO_INDEX])
+
+                for contextWord in sentence_tokenized[FROM_INDEX:TO_INDEX]:
+                    if contextWord != target_word:
+                        SKIP_GRAM_INPUT_WORD_LIST.append((target_word,contextWord))
+
+        return SKIP_GRAM_INPUT_WORD_LIST
