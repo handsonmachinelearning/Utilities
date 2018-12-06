@@ -1,3 +1,6 @@
+from collections import Counter
+import json
+
 class Vocabulary:
     
     def __init__(self, vocabulary, wordFrequencyFilePath):
